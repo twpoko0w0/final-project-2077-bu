@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -11,16 +12,20 @@ namespace web_api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+            var builder = WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .ConfigureKestrel(a =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    a.AddServerHeader = false;
                 });
+            var port = Environment.GetEnvironmentVariable("PORT");
+            if (!String.IsNullOrWhiteSpace(port))
+            {
+                builder.UseUrls("http://*:" + port);
+            }
+            return builder;
+        }
     }
 }

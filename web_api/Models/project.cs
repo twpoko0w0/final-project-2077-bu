@@ -22,8 +22,9 @@ namespace web_api
         public string Project_brief_detail { get; set; }
         public string Project_contact { get; set; }
         public string Project_image_link { get; set; }
+        public string Project_tag_name { get; set; }
 
-        internal AppDatabase Db { get; set; }
+    internal AppDatabase Db { get; set; }
 
         public project()
         {
@@ -48,7 +49,8 @@ namespace web_api
                                                        `project_detail`,
                                                        `project_brief_detail`,
                                                        `project_contact`,
-                                                       `project_image_link`) 
+                                                       `project_image_link`
+                                                       `project_tag_name`) 
 
                                                VALUES (@project_name,
                                                        @project_name,
@@ -60,7 +62,8 @@ namespace web_api
                                                        @project_detail,
                                                        @project_brief_detail,
                                                        @project_contact,
-                                                       @project_image_link);";
+                                                       @project_image_link
+                                                       @project_tag_name);";
             BindParams(cmd);
             await cmd.ExecuteNonQueryAsync();
             Id = (int)cmd.LastInsertedId;
@@ -77,7 +80,8 @@ namespace web_api
                                                      `project_detail`= @`project_detail`,
                                                      `project_brief_detail`= @project_brief_detail,
                                                      `project_contact`= @project_contact,
-                                                     `project_image_link`= @project_image_link WHERE `Id`=@id ; ";
+                                                     `project_image_link`= @project_image_link,
+                                                     `project_tag_name`= @project_tag_name  WHERE `Id`=@id ; ";
             BindParams(cmd);
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();
@@ -184,6 +188,13 @@ namespace web_api
                 ParameterName = "@project_image_link",
                 DbType = DbType.String,
                 Value = Project_image_link,
+            });
+
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@project_tag_name",
+                DbType = DbType.String,
+                Value = Project_tag_name,
             });
         }
     }

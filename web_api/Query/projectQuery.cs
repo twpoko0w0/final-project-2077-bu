@@ -18,26 +18,31 @@ namespace web_api
         public async Task<project> FindOneAsync(int id)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT 
-p.id,
-p.project_name,
-p.project_activated,
-p.project_status_id,
-pst.status_name,
-p.project_category_id,
-pc.project_category_name,
-p.project_seriousness_id,
-ps.project_seriousness_name,
-p.project_create_date,
-p.project_detail,
-p.project_brief_detail,
-p.project_contact,
-p.project_image_link
-FROM project p
-INNER JOIN project_seriousness ps on p.project_seriousness_id = ps.id
-INNER JOIN project_category pc on p.project_category_id = pc.id
-INNER JOIN project_status pst on p.project_status_id = pst.id  
-WHERE p.id = @id;"; 
+            cmd.CommandText = @"SELECT
+                                p.id,
+                                p.project_name,
+                                p.project_activated,
+                                p.project_status_id,
+                                pst.status_name,
+                                p.project_category_id,
+                                pc.project_category_name,
+                                p.project_seriousness_id,
+                                ps.project_seriousness_name,
+                                p.project_create_date,
+                                p.project_detail,
+                                p.project_brief_detail,
+                                p.project_contact,
+                                p.project_image_link,
+                                group_concat(pt.id),
+                                group_concat(pt.project_tag_name)
+                                FROM project p
+                                INNER JOIN project_seriousness ps on p.project_seriousness_id = ps.id
+                                INNER JOIN project_category pc on p.project_category_id = pc.id
+                                INNER JOIN project_status pst on p.project_status_id = pst.id
+                                INNER JOIN project_tag_relation ptr on p.id = ptr.project_id
+                                INNER JOIN project_tag pt on ptr.project_tag_id = pt.id
+                                WHERE p.id = @id
+                                GROUP BY p.id;";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -53,25 +58,30 @@ WHERE p.id = @id;";
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"SELECT 
-p.id,
-p.project_name,
-p.project_activated,
-p.project_status_id,
-pst.status_name,
-p.project_category_id,
-pc.project_category_name,
-p.project_seriousness_id,
-ps.project_seriousness_name,
-p.project_create_date,
-p.project_detail,
-p.project_brief_detail,
-p.project_contact,
-p.project_image_link
-FROM project p
-INNER JOIN project_seriousness ps on p.project_seriousness_id = ps.id
-INNER JOIN project_category pc on p.project_category_id = pc.id
-INNER JOIN project_status pst on p.project_status_id = pst.id 
-ORDER BY `id` DESC LIMIT 10; ";
+                                p.id,
+                                p.project_name,
+                                p.project_activated,
+                                p.project_status_id,
+                                pst.status_name,
+                                p.project_category_id,
+                                pc.project_category_name,
+                                p.project_seriousness_id,
+                                ps.project_seriousness_name,
+                                p.project_create_date,
+                                p.project_detail,
+                                p.project_brief_detail,
+                                p.project_contact,
+                                p.project_image_link,
+                                group_concat(pt.id),
+                                group_concat(pt.project_tag_name)
+                                FROM project p
+                                INNER JOIN project_seriousness ps on p.project_seriousness_id = ps.id
+                                INNER JOIN project_category pc on p.project_category_id = pc.id
+                                INNER JOIN project_status pst on p.project_status_id = pst.id
+                                INNER JOIN project_tag_relation ptr on p.id = ptr.project_id
+                                INNER JOIN project_tag pt on ptr.project_tag_id = pt.id
+                                GROUP BY p.id
+                                ORDER BY id DESC LIMIT 10; ";
             return await ReadAllAsync(await cmd.ExecuteReaderAsync());
         }
 
@@ -98,6 +108,7 @@ ORDER BY `id` DESC LIMIT 10; ";
                         Project_brief_detail = reader.GetString(11),
                         Project_contact = reader.GetString(12),
                         Project_image_link = reader.GetString(13),
+                        Project_tag_name = reader.GetString(14),
                     };
                     posts.Add(post);
                 }

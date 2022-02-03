@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-   <PropertyGroup>
+  <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>web_api</RootNamespace>
+    <UserSecretsId>4dbf6234-0506-4d36-8876-cd006dd87ab3</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
     <PackageReference Include="MySqlConnector" Version="2.1.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>

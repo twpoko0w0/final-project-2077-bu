@@ -31,7 +31,7 @@ namespace web_api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestDateTimeAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "web_api", Version = "v1" });
             });
             services.AddCors(options =>
             {
@@ -57,7 +57,7 @@ namespace web_api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestDateTimeAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1"));
             }
 
             app.UseHttpsRedirection();

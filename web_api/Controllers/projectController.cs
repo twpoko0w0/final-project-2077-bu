@@ -15,7 +15,7 @@ namespace web_api
             Db = db;
         }
 
-        // GET api/Users
+        // GET api/project
         [EnableCors("MyPolicy")]
         [HttpGet]
         public async Task<IActionResult> GetLatest()
@@ -26,7 +26,7 @@ namespace web_api
             return new OkObjectResult(result);
         }
 
-        // GET api/Users/(User ID)
+        // GET api/project/(Project ID)
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(int id)
         {
@@ -69,6 +69,7 @@ namespace web_api
             result.Project_brief_detail = body.Project_brief_detail;
             result.Project_contact = body.Project_contact;
             result.Project_image_link = body.Project_image_link;
+            result.Project_tag_name = body.Project_tag_name;
             await result.UpdateAsync();
             return new OkObjectResult(result);
         }
