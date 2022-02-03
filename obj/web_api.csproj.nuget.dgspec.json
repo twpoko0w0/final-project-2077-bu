@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project Web\\backend\\web_api\\web_api.csproj": {}
+    "D:\\Project Web\\final-project-2077-bu\\web_api.csproj": {}
   },
   "projects": {
-    "D:\\Project Web\\backend\\web_api\\web_api.csproj": {
+    "D:\\Project Web\\final-project-2077-bu\\web_api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project Web\\backend\\web_api\\web_api.csproj",
+        "projectUniqueName": "D:\\Project Web\\final-project-2077-bu\\web_api.csproj",
         "projectName": "web_api",
-        "projectPath": "D:\\Project Web\\backend\\web_api\\web_api.csproj",
+        "projectPath": "D:\\Project Web\\final-project-2077-bu\\web_api.csproj",
         "packagesPath": "C:\\Users\\tonln\\.nuget\\packages\\",
-        "outputPath": "D:\\Project Web\\backend\\web_api\\obj\\",
+        "outputPath": "D:\\Project Web\\final-project-2077-bu\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
