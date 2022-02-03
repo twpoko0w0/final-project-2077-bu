@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\web_api",
-    "\\web_api\\Controllers"
+    "\\Properties",
+    "\\Query"
   ],
+  "SelectedNode": "\\web_api.sln",
   "PreviewInSolutionExplorer": false
 }
