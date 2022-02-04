@@ -22,11 +22,4 @@ RUN dotnet publish "web_api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-<<<<<<< HEAD
 ENTRYPOINT ["dotnet", "web_api.dll"]
-
-# Use the following instead for Heroku
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet web_api.dll
-=======
-ENTRYPOINT ["dotnet", "web_api.dll"]
->>>>>>> master

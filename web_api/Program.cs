@@ -12,20 +12,30 @@ namespace web_api
 {
     public class Program
     {
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        public static void Main(string[] args)
         {
-            var builder = WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .ConfigureKestrel(a =>
-                {
-                    a.AddServerHeader = false;
-                });
-            var port = Environment.GetEnvironmentVariable("PORT");
-            if (!String.IsNullOrWhiteSpace(port))
-            {
-                builder.UseUrls("http://*:" + port);
-            }
-            return builder;
+            CreateHostBuilder(args).Build().Run();
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
+
+/*
+public static void Main(string[] args)
+{
+    CreateHostBuilder(args).Build().Run();
+}
+
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
+*/

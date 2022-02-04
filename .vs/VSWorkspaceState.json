@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\web_api",
-    "\\web_api\\Controllers"
+    "\\web_api\\Query"
   ],
-  "SelectedNode": "\\web_api\\Controllers\\UsersController.cs",
+  "SelectedNode": "\\web_api\\Query\\projectQuery.cs",
   "PreviewInSolutionExplorer": false
 }
