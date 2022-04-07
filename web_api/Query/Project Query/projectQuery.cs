@@ -33,16 +33,24 @@ namespace web_api
                                 p.project_brief_detail,
                                 p.project_contact,
                                 p.project_image_link,
+                                p.project_duration_id,
+                                pd.duration,
                                 group_concat(pt.id),
-                                group_concat(pt.project_tag_name)
+                                group_concat(pt.project_tag_name),
+                                group_concat(ppq.quantity),
+                                group_concat(ptr.project_tag_role),
+                                group_concat(ptr.id)
                                 FROM project p
                                 INNER JOIN project_seriousness ps on p.project_seriousness_id = ps.id
                                 INNER JOIN project_category pc on p.project_category_id = pc.id
                                 INNER JOIN project_status pst on p.project_status_id = pst.id
                                 INNER JOIN project_tag_relation ptr on p.id = ptr.project_id
                                 INNER JOIN project_tag pt on ptr.project_tag_id = pt.id
+                                INNER JOIN project_duration pd on p.project_duration_id = pd.id
+                                INNER JOIN project_position_quantity ppq on ppq.id = ptr.project_position_quantity_id
                                 WHERE p.id = @id
-                                GROUP BY p.id;";
+                                GROUP BY p.id
+                                ORDER BY id DESC;";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -72,16 +80,23 @@ namespace web_api
                                 p.project_brief_detail,
                                 p.project_contact,
                                 p.project_image_link,
+                                p.project_duration_id,
+                                pd.duration,
                                 group_concat(pt.id),
-                                group_concat(pt.project_tag_name)
+                                group_concat(pt.project_tag_name),
+                                group_concat(ppq.quantity),
+                                group_concat(ptr.project_tag_role),
+                                group_concat(ptr.id)
                                 FROM project p
                                 INNER JOIN project_seriousness ps on p.project_seriousness_id = ps.id
                                 INNER JOIN project_category pc on p.project_category_id = pc.id
                                 INNER JOIN project_status pst on p.project_status_id = pst.id
                                 INNER JOIN project_tag_relation ptr on p.id = ptr.project_id
                                 INNER JOIN project_tag pt on ptr.project_tag_id = pt.id
+                                INNER JOIN project_duration pd on p.project_duration_id = pd.id
+                                INNER JOIN project_position_quantity ppq on ppq.id = ptr.project_position_quantity_id
                                 GROUP BY p.id
-                                ORDER BY id DESC LIMIT 10; ";
+                                ORDER BY id DESC;";
             return await ReadAllAsync(await cmd.ExecuteReaderAsync());
         }
 
@@ -108,7 +123,13 @@ namespace web_api
                         Project_brief_detail = reader.GetString(11),
                         Project_contact = reader.GetString(12),
                         Project_image_link = reader.GetString(13),
-                        Project_tag_name = reader.GetString(14),
+                        Project_duration_id = reader.GetInt16(14),
+                        Duration = reader.GetInt16(15),
+                        Project_tag_id = reader.GetString(16),
+                        Project_tag_name = reader.GetString(17),
+                        Quantity = reader.GetString(18),
+                        Project_tag_role = reader.GetString(19),
+                        Project_tag_relation_id = reader.GetString(20),
                     };
                     posts.Add(post);
                 }

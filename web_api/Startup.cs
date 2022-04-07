@@ -38,7 +38,7 @@ namespace web_api
                 options.AddPolicy("MyPolicy",
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:2565")
+                    builder.WithOrigins("http://localhost:2022")
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     //.WithMethods("POST", "PUT", "DELETE", "GET");

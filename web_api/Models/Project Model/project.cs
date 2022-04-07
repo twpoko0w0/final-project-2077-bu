@@ -22,7 +22,14 @@ namespace web_api
         public string Project_brief_detail { get; set; }
         public string Project_contact { get; set; }
         public string Project_image_link { get; set; }
+        public string Project_tag_id { get; set; }
         public string Project_tag_name { get; set; }
+        public int Project_duration_id { get; set; }
+        public int Duration { get; set; }
+        public string Quantity { get; set; }
+        public string Project_tag_role { get; set; }
+        public string Project_tag_relation_id { get; set; }
+
 
     internal AppDatabase Db { get; set; }
 
@@ -49,11 +56,10 @@ namespace web_api
                                                        `project_detail`,
                                                        `project_brief_detail`,
                                                        `project_contact`,
-                                                       `project_image_link`
-                                                       `project_tag_name`) 
+                                                       `project_image_link`,
+                                                       `project_duration_id`) 
 
                                                VALUES (@project_name,
-                                                       @project_name,
                                                        @project_activated,
                                                        @project_status_id,
                                                        @project_category_id,
@@ -62,8 +68,8 @@ namespace web_api
                                                        @project_detail,
                                                        @project_brief_detail,
                                                        @project_contact,
-                                                       @project_image_link
-                                                       @project_tag_name);";
+                                                       @project_image_link,
+                                                       @project_duration_id); ";
             BindParams(cmd);
             await cmd.ExecuteNonQueryAsync();
             Id = (int)cmd.LastInsertedId;
@@ -71,17 +77,19 @@ namespace web_api
 
         public async Task UpdateAsync()
         {
+            //ไม่มี create date?
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"UPDATE `project` SET `project_name`= @project_name,  
                                                      `project_activated`= @project_activated,  
                                                      `project_status_id`= @project_status_id,
                                                      `project_category_id`= @project_category_id,
                                                      `project_seriousness_id`= @project_seriousness_id,
-                                                     `project_detail`= @`project_detail`,
+                                                     `project_create_date`= @project_create_date,
+                                                     `project_detail`= @project_detail,
                                                      `project_brief_detail`= @project_brief_detail,
                                                      `project_contact`= @project_contact,
                                                      `project_image_link`= @project_image_link,
-                                                     `project_tag_name`= @project_tag_name  WHERE `Id`=@id ; ";
+                                                     `project_duration_id`= @project_duration_id WHERE `Id` = @id;";
             BindParams(cmd);
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();
@@ -192,9 +200,51 @@ namespace web_api
 
             cmd.Parameters.Add(new MySqlParameter
             {
+                ParameterName = "@project_tag_id",
+                DbType = DbType.String,
+                Value = Project_tag_id,
+            });
+
+            cmd.Parameters.Add(new MySqlParameter
+            {
                 ParameterName = "@project_tag_name",
                 DbType = DbType.String,
                 Value = Project_tag_name,
+            });
+            
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@project_duration_id",
+                DbType = DbType.Int16,
+                Value = Project_duration_id,
+            });
+            
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@duration",
+                DbType = DbType.Int16,
+                Value = Duration,
+            });
+
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@quantity",
+                DbType = DbType.String,
+                Value = Quantity,
+            });
+            
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@project_tag_role",
+                DbType = DbType.String,
+                Value = Project_tag_role,
+            });
+            
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@project_tag_relation_id",
+                DbType = DbType.String,
+                Value = Project_tag_relation_id,
             });
         }
     }

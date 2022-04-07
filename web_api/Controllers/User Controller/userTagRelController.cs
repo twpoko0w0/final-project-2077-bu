@@ -7,40 +7,40 @@ namespace web_api
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class projectController : ControllerBase
+    public class userTagRelController : ControllerBase
     {
         public AppDatabase Db { get; }
-        public projectController(AppDatabase db)
+        public userTagRelController(AppDatabase db)
         {
             Db = db;
         }
 
-        // GET api/project
+        // GET
         [EnableCors("MyPolicy")]
         [HttpGet]
         public async Task<IActionResult> GetLatest()
         {
             await Db.Connection.OpenAsync();
-            var query = new projectQuery(Db);
+            var query = new userTagRelQuery(Db);
             var result = await query.LatestPostAsync();
             return new OkObjectResult(result);
         }
 
-        // GET api/project/(Project ID)
+        // GET (ID)
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(int id)
         {
             await Db.Connection.OpenAsync();
-            var query = new projectQuery(Db);
+            var query = new userTagRelQuery(Db);
             var result = await query.FindOneAsync(id);
             if (result is null)
                 return new NotFoundResult();
             return new OkObjectResult(result);
         }
 
-        // POST 
+        // POST
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] project body)
+        public async Task<IActionResult> Post([FromBody] userTagRel body)
         {
             await Db.Connection.OpenAsync();
             body.Db = Db;
@@ -50,28 +50,30 @@ namespace web_api
 
         // PUT 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOne(int id, [FromBody] project body)
+        public async Task<IActionResult> PutOne(int id, [FromBody] userTagRel body)
         {
             await Db.Connection.OpenAsync();
-            var query = new projectQuery(Db);
+            var query = new userTagRelQuery(Db);
             var result = await query.FindOneAsync(id);
             if (result is null)
                 return new NotFoundResult();
-            result.Project_name = body.Project_name;
-            result.Project_activated = body.Project_activated;
-            result.Project_status_id = body.Project_status_id;
-            result.Project_category_id = body.Project_category_id;
-            result.Project_category_name = body.Project_category_name;
-            result.Project_seriousness_id = body.Project_seriousness_id;
-            result.Project_seriousness_name = body.Project_seriousness_name;
-            result.Status_name = body.Status_name;
-            result.Project_detail = body.Project_detail;
-            result.Project_brief_detail = body.Project_brief_detail;
-            result.Project_contact = body.Project_contact;
-            result.Project_image_link = body.Project_image_link;
-            result.Project_tag_name = body.Project_tag_name;
+            result.User_id = body.User_id;
+            result.User_tag_id = body.User_tag_id;
             await result.UpdateAsync();
             return new OkObjectResult(result);
+        }
+
+        // DELETE
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOne(int id)
+        {
+            await Db.Connection.OpenAsync();
+            var query = new userTagRelQuery(Db);
+            var result = await query.FindOneAsync(id);
+            if (result is null)
+                return new NotFoundResult();
+            await result.DeleteAsync();
+            return new OkResult();
         }
     }
 }
