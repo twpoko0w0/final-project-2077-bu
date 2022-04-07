@@ -38,7 +38,7 @@ namespace web_api
                 options.AddPolicy("MyPolicy",
                 builder =>
                 {
-                    builder.WithOrigins("https://experiencehub-161090-final.win", "https://www.experiencehub-161090-final.win")
+                    builder.WithOrigins("http://experiencehub-161090-final.win", "http://www.experiencehub-161090-final.win)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     //.WithMethods("POST", "PUT", "DELETE", "GET");
