@@ -50,7 +50,7 @@ namespace web_api
             cmd.CommandText = @"UPDATE `user_project_relation` SET `user_id`= @user_id,  
                                                                   `project_id`= @project_id,  
                                                                   `project_role_id`= @project_role_id,
-                                                                  `project_tag_rel_id`= project_tag_rel_id WHERE `Id`= @id;";
+                                                                  `project_tag_rel_id`= @project_tag_rel_id WHERE `Id`= @id;";
             BindParams(cmd);
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();

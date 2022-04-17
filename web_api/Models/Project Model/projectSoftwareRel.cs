@@ -47,7 +47,7 @@ namespace web_api
             BindParams(cmd);
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();
-        }
+        }                                                                                                   
 
         public async Task DeleteAsync()
         {

@@ -59,6 +59,12 @@ namespace web_api
                 return new NotFoundResult();
             result.User_id = body.User_id;
             result.Project_id = body.Project_id;
+            result.Date_time = body.Date_time;
+            result.Project_tag_rel_id = body.Project_tag_rel_id;
+            result.Interview = body.Interview;
+            result.Facebook = body.Facebook;
+            result.Email = body.Email;
+            result.Line = body.Line;
             await result.UpdateAsync();
             return new OkObjectResult(result);
         }

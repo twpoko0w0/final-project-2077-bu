@@ -51,6 +51,11 @@ namespace web_api
                         User_id = reader.GetString(1),
                         Project_id = reader.GetInt32(2),
                         Date_time = reader.GetDateTime(3),
+                        Project_tag_rel_id = reader.GetInt32(4),
+                        Interview = reader.GetString(5),
+                        Facebook = reader.GetString(6),
+                        Email = reader.GetString(7),
+                        Line = reader.GetString(8),
                     };
                     posts.Add(post);
                 }
